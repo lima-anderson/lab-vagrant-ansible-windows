@@ -1,0 +1,17 @@
+---
+- name: Check for missing updates
+  hosts: all
+
+  tasks:
+    - name: Check for missing updates
+      win_updates:
+        category_names:
+          - CriticalUpdates
+          - SecurityUpdates
+          - UpdateRollups
+        state: searched
+      register: update_results
+
+    - name: report update results
+      debug:
+        msg: "{{ update_results}}"

@@ -1,0 +1,22 @@
+---
+- name: Install packages
+  hosts: all
+
+  tasks:
+    # Update and reboot if the result records a reboot is necessary
+    - name: Instalar atualizações críticas e de segurança
+      win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+          - UpdateRollups
+        state: installed
+      register: update_result
+
+    - name: report update results
+      debug:
+        msg: "{{ update_result }}"
+
+    - name: reboot host if required
+      win_reboot:
+      when: update_result.reboot_required

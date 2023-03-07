@@ -1,0 +1,4 @@
+---
+# tasks file for check_connecttivity
+- name: Ping Windows VM
+  win_ping:

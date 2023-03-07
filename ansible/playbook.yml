@@ -1,0 +1,8 @@
+---
+- name: Windows Update
+  hosts: all
+
+  roles:
+    - check_connecttivity
+    - check_updates
+    - update
