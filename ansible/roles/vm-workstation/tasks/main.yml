@@ -1,0 +1,8 @@
+---
+# tasks file for vm-workstation
+- name: Install vmwareworkstation
+  win_chocolatey:
+    name: vmwareworkstation
+    version: '17.0.1.21139696'
+    source: http://community.chocolatey.org/api/v2/
+    state: present

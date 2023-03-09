@@ -6,3 +6,4 @@
     - check_connecttivity
     - check_updates
     - update
+    # - vm-workstation

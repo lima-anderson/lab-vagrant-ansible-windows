@@ -2,16 +2,26 @@
 # tasks file for update
 - name: Instalar atualizações críticas e de segurança
   win_updates:
-    category_names:
-      - SecurityUpdates
-      - CriticalUpdates
-      - UpdateRollups
+    category_names: "*"
     state: installed
   register: update_result
 
-- name: report update results
+# - name: report update results
+#   debug:
+#     msg: "{{ update_result}}"
+
+- name: Lista atualizações realizadas
   debug:
-    msg: "{{ update_result }}"
+    msg: |
+      {% if update_result.updates.values() %}
+      As seguintes atualizações foram feitas no host {{ inventory_hostname }}: {{ update_result.updates }}
+      {% else %}
+      Nenhuma atualização foi realizada no host {{ inventory_hostname }}.
+      {% endif %}
+  
+  vars:
+    updates: "{{ (update_result.updates.values() | list) if (update_result.updates is mapping) else (update_result.updates) }}"
+  when: update_result.updates is defined
 
 - name: reboot host if required
   win_reboot:
